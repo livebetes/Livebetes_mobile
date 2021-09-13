@@ -23,15 +23,43 @@ import {
   } from "react-native-chart-kit";
   import Icon2 from 'react-native-vector-icons/Entypo';
   import Icon from 'react-native-vector-icons/AntDesign';
+import RegisterData from './registerData';
 
 
   export default class IndividualDataLog extends React.Component {
       constructor(props){
           super(props)
           this.state = {
-
+                regestrationDate: "",
+                insulineTakenBefore: null,
+                sugerLevel: null,
+                insulineCorrection: null,
+                foodInsuline: null,
+                carbsEaten: null,
+                activitesDone: null
           }
       }
+
+       toReadableDate = (date) => {
+        var date = new Date(date);
+        date = date.toString().split(" ")[1] + " " + date.toString().split(" ")[2] + " " + date.toString().split(" ")[3];
+        return date;
+    }
+    
+      UNSAFE_componentWillMount(){
+
+
+      }
+
+      assignDataToState = (glucoseData,index)=>{
+
+        this.setState({
+          regestrationDate: this.toReadableDate(glucoseData[index].timeStamp),
+          insulineTakenBefore: parseFloat(glucoseData[index].correctionInsuline) + parseFloat(glucoseData[index].foodInsuline)
+        })
+          
+      }
+
       render(){
         console.log(this.props);
           return(
