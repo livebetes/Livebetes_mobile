@@ -25,30 +25,44 @@ import {
 
               <View style={styles.firstChild}>
              
+
+             {/* popupHeader starts here  */}
               <View style={styles.popupHeader}>
-                
-          
                 <Icon name="syringe" size={30} color={'white'} style={{alignSelf:'center',padding:5}} />
                 
                 <Text style={styles.titleText}>Glucose to insuline</Text>
                 
-                <TouchableOpacity onPress={()=>this.props.close()} style={{top:5,right:10,position:'absolute',zIndex:600}}>
+                {/* closing button */}
+                <TouchableOpacity onPress={()=>this.props.close()} style={styles.closeButton}>
                     <Icon2 name={"closecircle"} size={25} color={'darkgray'} />
                     </TouchableOpacity>
+                {/* closing button ends here */}
                 </View> 
-                <View style={{flexDirection:'row',height:120,margin:7,position:'relative',top:0,justifyContent:'center'}}>
-                 <View style={{width:'45%',height:'95%',backgroundColor:'gray',margin:8,flexDirection:'column',elevation:20}}>
-                <Text style={{fontSize:20,textAlign:'center',color:'lightgray'}}>Glucose</Text>
-                <TextInput style={{color:'lightgray',borderBottomWidth:1, width:'25%',alignSelf:'center',height:50,top:5,borderBottomColor:'lightgray',textAlign:'center',fontSize:25}}></TextInput>
-                 </View>
-                 <View style={{width:'45%',height:'95%',backgroundColor:'gray',margin:8,flexDirection:'column',elevation:20}}>
-                <Text style={{fontSize:20,textAlign:'center',color:'lightgray'}}>Insuline</Text>
-                <TextInput style={{color:'lightgray',borderBottomWidth:1, width:'25%',alignSelf:'center',height:50,top:5,borderBottomColor:'lightgray',textAlign:'center',fontSize:25}}></TextInput>
-                 </View>
-                </View>
-               <TouchableOpacity style={{width:'91%',height:100,backgroundColor:'darkgray',color:'lightgray',alignSelf:'center',top:12}}>
-                   <Text style={{color:'lightgray',fontSize:30,margin:20,elevation:50, textAlign:'center'}}>CALCULATE </Text></TouchableOpacity>
+                {/* popupHeader ends here  */}
 
+                <View style={styles.textWrapperParent}>
+
+                  {/* this is where user inters or views glucos in there glucos to insuline ratio */}
+                 <View style={styles.textWrapperFirstChild}>
+                <Text style={styles.wrappedText}>Glucose</Text>
+                <TextInput style={styles.wrappedTextInput}></TextInput>
+                 </View>
+                 {/* glucose ends here  */}
+
+                {/* this si where user inters or views insuline in there glucos to insuline ratio  */}
+                 <View style={styles.textWrapperFirstChild}>
+                <Text style={styles.wrappedText}>Insuline</Text>
+                <TextInput style={styles.wrappedTextInput}></TextInput>
+                 </View>
+                {/* Insuline ends here  */}
+
+                </View>
+
+                {/* This button will calclulate there insuline to carb ratio based on the persons registred data */}
+               <TouchableOpacity style={styles.calculateButton}>
+                   <Text style={styles.calculateButtonText}>CALCULATE </Text>
+                   </TouchableOpacity>
+              {/* This is where the button ends  */}
                </View>
             </View>
           );
@@ -71,7 +85,7 @@ import {
         ,alignSelf:'center'
         ,top:"20%"
         ,overflow:'hidden'
-        ,elevation:30}
+        ,elevation:30
       },
       popupHeader:{
         width:'100%'
@@ -85,6 +99,59 @@ import {
         fontSize:'white',
         fontSize:20,
         color:'white'
+      },
+      closeButton:{
+        top:5
+        ,right:10
+        ,position:'absolute'
+        ,zIndex:600
+      },
+      textWrapperParent:{
+        flexDirection:'row'
+        ,height:120
+        ,margin:7
+        ,position:'relative'
+        ,top:0
+        ,justifyContent:'center'
+      },
+      textWrapperFirstChild:{
+        width:'45%'
+        ,height:'95%'
+        ,backgroundColor:'gray'
+        ,margin:8
+        ,flexDirection:'column'
+        ,elevation:20
+      },
+      wrappedText:{
+        fontSize:20
+        ,textAlign:'center'
+        ,color:'lightgray'
+      },
+      wrappedTextInput:{
+        color:'lightgray'
+        ,borderBottomWidth:1
+        , width:'25%'
+        ,alignSelf:'center'
+        ,height:50
+        ,top:5
+        ,borderBottomColor:'lightgray'
+        ,textAlign:'center'
+        ,fontSize:25
+      },
+      calculateButton:{
+        width:'91%'
+        ,height:100
+        ,backgroundColor:'darkgray'
+        ,color:'lightgray'
+        ,alignSelf:'center'
+        ,top:12
+      },
+      calculateButtonText:{
+        color:'lightgray'
+        ,fontSize:30
+        ,margin:20
+        ,elevation:50
+        , textAlign:'center'
       }
-      
+
     });
