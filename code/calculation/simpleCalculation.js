@@ -2,7 +2,11 @@
 
 
 
-export const calculateInsuline = (glucoseLevel,carbsTaken,activitiesToDo,insulineToCarbRatio,glucoseToCarbRatio) => {
+export const calculateInsuline = (glucoseLevel
+        ,carbsTaken
+        ,activitiesToDo
+        ,insulineToCarbRatio
+        ,glucoseToCarbRatio) => {
         // foodInsuline = (carbsTaken * insulineToCarbRatio.insuline) / (insulineToCarbRatio.carb * )
         // 1 = 10
         // insu     = carb 
@@ -33,7 +37,8 @@ export const calculateInsuline = (glucoseLevel,carbsTaken,activitiesToDo,insulin
         
 
 
-       return {"correctionInsuline": removeRepeatingDecimal(correctionInsuline),
+       return {"correctionInsuline": removeRepeatingDecimal(correctionInsuline)
+       ,
                 "foodInsuline": removeRepeatingDecimal(foodInsuline),
                 "carbsNeededToJustifyActivity": removeRepeatingDecimal(foodInsuline) };
         

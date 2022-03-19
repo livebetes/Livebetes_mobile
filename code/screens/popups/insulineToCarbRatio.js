@@ -23,12 +23,13 @@ import {
   } from "react-native-chart-kit";
   import Icon2 from 'react-native-vector-icons/AntDesign';
   import Icon from 'react-native-vector-icons/Fontisto';
+  import {addDataToLocalDataBase,getData,getAllKeys} from '../../dataManagement/localDataManager.js';
 
   export default class InsulineToCarbRatio extends React.Component{
       constructor(props){
           super(props)
           this.state = {
-
+                  carb: 0
           }
       }
 
@@ -50,7 +51,8 @@ import {
                  </View>
                  <View style={{width:'45%',height:'95%',backgroundColor:'#1E1E1E',margin:8,flexDirection:'column',elevation:20}}>
                 <Text style={{fontSize:20,textAlign:'center',color:'lightgray'}}>Carb</Text>
-                <TextInput value={JSON.stringify(this.props.carb)} style={{color:'lightgray',borderBottomWidth:1, width:'25%',alignSelf:'center',height:50,top:5,borderBottomColor:'lightgray',textAlign:'center',fontSize:25}}></TextInput>
+                <TextInput value={JSON.stringify(this.props.carb)} 
+               style={{color:'lightgray',borderBottomWidth:1, width:'25%',alignSelf:'center',height:50,top:5,borderBottomColor:'lightgray',textAlign:'center',fontSize:25}}></TextInput>
                  </View>
                 </View>
                <TouchableOpacity style={{width:'91%',height:100,backgroundColor:'#1E1E1E',color:'lightgray',alignSelf:'center',top:12}}>
@@ -61,3 +63,6 @@ import {
           );
       }
   }
+
+  // onChangeText={(text) => {this.setState({carb:text});   var registredInsulineToCarb =  {"insuline":"1","carb":text};
+  //  addDataToLocalDataBase("insulineToCarb",registredInsulineToCarb)}} 

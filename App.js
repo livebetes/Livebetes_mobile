@@ -35,7 +35,7 @@ import PushNotification from 'react-native-push-notification';
 export default class Alls extends React.Component{
  
     componentWillMount(){
-      this.createChannels()
+      // this.createChannels()
     }
     
      createChannels = () => { 

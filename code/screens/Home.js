@@ -85,22 +85,31 @@ glucoseHistory = [
 
     */
  
-async UNSAFE_componentWillMount(){
-  var keys = await getAllKeys();
-  console.log(keys);
 
+//when the app opens 
+async UNSAFE_componentWillMount(){
+  // addDataToLocalDataBase("glucoseHistory","[]");
+
+  // get all the data keys for the local db
+  var keys = await getAllKeys();
+
+  //get the glucose history data and then loop it
+  //and then calculate the width of the graph based on the number of glucose history registred
    getData("glucoseHistory").then((data)=>{
-    console.log("tttttttttttttttttttttttttttttt: " ,data);
     var graphArrayD = this.createAnArrayForTheGraph(JSON.parse(data));
-    console.log("this is the graphArray: ", graphArrayD)
     var graphWidth = (graphArrayD.data.length/4) * 400;
+  
     var graphColor = (opacity = 1) => `rgba(0, 0, 0, ${opacity})`;
     
-    console.log("this should be the data given: ", this.createModleForGraph(graphArrayD.labels,graphArrayD.data));
-    console.log("whats going; ",graphArrayD.data.length)
-    if(graphArrayD.data.length > 2){
+    //if the data is greater than 4 this wil use the calculated width
+    if(graphArrayD.data.length > 4){
       console.log('data edata');
        this.setState({graphArrayLoaded:true,glucoseData:data,graphWidth: graphWidth, graphArray: this.createModleForGraph(graphArrayD.labels,graphArrayD.data),pieChartData: this.creatPieDataModle(graphArrayD.data)});
+    }else if(graphArrayD.data.length == 0){
+
+       }else{ 
+      this.setState({graphArrayLoaded:true,glucoseData:data,graphWidth: 400, graphArray: this.createModleForGraph(graphArrayD.labels,graphArrayD.data),pieChartData: this.creatPieDataModle(graphArrayD.data)});
+
     }
   });
            
@@ -117,12 +126,12 @@ async UNSAFE_componentWillMount(){
   });
 
   if(!this.state.insulineToCarb){
-     var insulineToCarbTemp = {insuline:1,carb:10};
+     var insulineToCarbTemp = {insuline:1,carb:5};
      insulineToCarbTemp = JSON.stringify(insulineToCarbTemp);
     addDataToLocalDataBase("insulineToCarb",insulineToCarbTemp);
   }
   if(!this.state.glucoseToInsuline){
-    var GlucoseToInsulineRatioTemp = {insuline:1,glucose:30};
+    var GlucoseToInsulineRatioTemp = {insuline:1,glucose:15};
      GlucoseToInsulineRatioTemp = JSON.stringify(GlucoseToInsulineRatioTemp);
     addDataToLocalDataBase("glucoseToInsuline",GlucoseToInsulineRatioTemp);
   }
@@ -154,10 +163,15 @@ updateGraph = () => {
     
     console.log("this should be the data given: ", this.createModleForGraph(graphArrayD.labels,graphArrayD.data));
     console.log("whats going; ",graphArrayD.data.length)
-    if(graphArrayD.data.length > 2){
+    if(graphArrayD.data.length > 4){
       console.log('data edata');
        this.setState({graphArrayLoaded:true,glucoseData:data,graphWidth: graphWidth, graphArray: this.createModleForGraph(graphArrayD.labels,graphArrayD.data),pieChartData: this.creatPieDataModle(graphArrayD.data)});
-    }
+    }else if(graphArrayD.data.length == 0){
+
+    }else{ 
+   this.setState({graphArrayLoaded:true,glucoseData:data,graphWidth: 400, graphArray: this.createModleForGraph(graphArrayD.labels,graphArrayD.data),pieChartData: this.creatPieDataModle(graphArrayD.data)});
+
+ }
   }); }
 
   //1E1E1E
@@ -216,7 +230,7 @@ updateGraph = () => {
         }else if(data <=180 && data >=80){
           normalCount++;
         }else if(data <80){
-          lowCount--;
+          lowCount++;
         }
           
       });
@@ -339,8 +353,8 @@ updateGraph = () => {
       handleNotification = () =>{
         PushNotification.localNotification({
               channelId: 'test-channel',
-              title: "this is a test",
-              message: "ok this is the meassage so you better get your ass ready",
+              title: "hey Betye",
+              message: "ayzoshe yene fikir ewedshalhu empwaa",
               vibrate: true, // (optional) default: true
               vibration: 300, 
               visibility: 'public',
@@ -360,13 +374,13 @@ updateGraph = () => {
               }
 
               {this.state.insulineToCarbRatio &&
-                <InsulineToCarbRatio insuline={this.state.insulineToCarbRatioData.insuline} carb={this.state.insulineToCarbRatioData.carb} close={()=>{this.closePopup("InsulineToCarbRatio")}} />
+                <InsulineToCarbRatio insuline={this.state.insulineToCarbRatioData.insuline} carb={this.state.insulineToCarbRatioData.carb}  close={()=>{this.closePopup("InsulineToCarbRatio")}} />
               }
 
               {this.state.GlucoseToCarbRatio && 
               <GlucoseToInsulineRatio close={()=>{this.closePopup("GlucoseToCarbRatio")}} />
     }
-              <TouchableOpacity onPress={() => {this.handleNotification(), this.setState({registerData:true})}} style={{position:'absolute',justifyContent:'center',bottom:40,right:40,width:60,height:60,backgroundColor:'green',borderRadius:30,zIndex:200,borderWidth:2,borderColor:'black'}}>
+              <TouchableOpacity onPress={() => {console.log("+++++++++++++ " ,this.state.pieChartData), this.handleNotification(), this.setState({registerData:true})}} style={{position:'absolute',justifyContent:'center',bottom:40,right:40,width:60,height:60,backgroundColor:'green',borderRadius:30,zIndex:200,borderWidth:2,borderColor:'black'}}>
           <Icon2 name="drop" size={30} color={'red'} style={{alignSelf:'center'}} />
               </TouchableOpacity>
                        <ScrollView style={{position:'relative',top:0,left:0,width:'100%'}} contentContainerStyle={{alignItems:'center'}}>
@@ -447,9 +461,9 @@ updateGraph = () => {
 
             </View>
             <View style={{width:'95%',height:200,backgroundColor:'#1E1E1E',borderWidth:3,borderColor:'green',borderRadius:10}}>
-
+{ this.state.graphArrayLoaded &&
             <PieChart
-  data={this.pieData}
+  data={this.state.pieChartData}
   width={screenWidth*0.95}
   height={200}
   chartConfig={this.chartConfig}
@@ -457,7 +471,8 @@ updateGraph = () => {
   backgroundColor={"transparent"}
   paddingLeft={"15"}
   absolute
-/>
+/> 
+}
 
             </View>
             <View style={{height:100}}>

@@ -1,29 +1,15 @@
 import React from 'react';
 
 import {
-    ImageBackground,
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
     StyleSheet,
     Text,
-    useColorScheme,
     View,
     TouchableOpacity,
-    Image,
     TextInput
   } from 'react-native';
-  import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
-  } from "react-native-chart-kit";
+
   import Icon2 from 'react-native-vector-icons/AntDesign';
   import Icon from 'react-native-vector-icons/FontAwesome5';
-
   export default class GlucoseToInsulineRatio extends React.Component{
       constructor(props){
           super(props)
@@ -34,11 +20,18 @@ import {
 
       render(){
           return(
-            <View style={{position:'absolute',zIndex:500,elevation:400, width:'100%',height:'100%',backgroundColor:'rgba(54,54,54,0.4)',alignItems:'center',top:0,left:0}}>
-              <View style={{backgroundColor:'white',width:'80%',height:'40%',alignSelf:'center',top:"20%",overflow:'hidden',elevation:30}}>
-              <View style={{width:'100%',height:40,backgroundColor:'green',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+            <View style={styles.parent}>
+              {/* The parent is a semi transparent screen that takes 100% of the screen */}
+
+              <View style={styles.firstChild}>
+             
+              <View style={styles.popupHeader}>
+                
+          
                 <Icon name="syringe" size={30} color={'white'} style={{alignSelf:'center',padding:5}} />
-                <Text style={{fontSize:'white',fontSize:20,color:'white'}}>Glucose to insuline</Text>
+                
+                <Text style={styles.titleText}>Glucose to insuline</Text>
+                
                 <TouchableOpacity onPress={()=>this.props.close()} style={{top:5,right:10,position:'absolute',zIndex:600}}>
                     <Icon2 name={"closecircle"} size={25} color={'darkgray'} />
                     </TouchableOpacity>
@@ -61,3 +54,37 @@ import {
           );
       }
   }
+
+    const styles = StyleSheet.create({
+      parent:{
+        position:'absolute'
+        ,zIndex:500
+        ,elevation:400
+        , width:'100%'
+        ,height:'100%'
+        ,backgroundColor:'rgba(54,54,54,0.4)',alignItems:'center',top:0,left:0
+      },
+      firstChild:{
+        backgroundColor:'white'
+        ,width:'80%'
+        ,height:'40%'
+        ,alignSelf:'center'
+        ,top:"20%"
+        ,overflow:'hidden'
+        ,elevation:30}
+      },
+      popupHeader:{
+        width:'100%'
+        ,height:40
+        ,backgroundColor:'green'
+        ,flexDirection:'row'
+        ,alignItems:'center'
+        ,justifyContent:'center'
+      },
+      titleText:{
+        fontSize:'white',
+        fontSize:20,
+        color:'white'
+      }
+      
+    });
