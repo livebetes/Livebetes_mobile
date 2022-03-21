@@ -29,9 +29,22 @@
    ReloadInstructions,
  } from 'react-native/Libraries/NewAppScreen';
 import Everything from './code/navigation.js';
+import PushNotification from 'react-native-push-notification';
 
-  export default class Alls extends React.Component{
+
+export default class Alls extends React.Component{
  
+    componentWillMount(){
+      // this.createChannels()
+    }
+    
+     createChannels = () => { 
+      PushNotification.createChannel({
+        channelId: 'test-channel',
+        channelName: ' test channel 2'
+    
+      })
+    }
    render(){
    return(
   
